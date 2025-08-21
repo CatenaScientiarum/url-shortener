@@ -23,4 +23,5 @@ Thumbs.db
 .idea/
 
 /node_modules/
-.vite/
+
+/full.js
