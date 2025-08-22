@@ -12,7 +12,7 @@ dotenv.config(); //  load environment variables from the .env file
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true })); // Enable CORS for the frontend URL
+app.use(cors({ origin: "http://localhost:5555", credentials: true })); // Enable CORS for the frontend URL
 app.use(express.json()); // to parse JSON body
 const server = http.createServer(app);
 const io = new socketio.Server(server, {
