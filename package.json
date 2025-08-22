@@ -4,8 +4,10 @@
     "rimraf": "^6.0.1"
   },
   "scripts": {
-    "launch": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev -- --port 5555\"",
+    "launch": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev -- --port 5555\"", 
     "clean-all": "npm cache clean --force && npx rimraf node_modules package-lock.json backend/node_modules backend/package-lock.json frontend/node_modules frontend/package-lock.json",
-    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend"
+    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "fix": "npm cache clean --force && npm install -g npm@latest"
   }
 }
+
