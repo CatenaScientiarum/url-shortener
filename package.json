@@ -1,9 +1,11 @@
 {
   "devDependencies": {
-    "concurrently": "^9.2.0"
+    "concurrently": "^9.2.0",
+    "rimraf": "^6.0.1"
   },
   "scripts": {
-    "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
-    "install-all": "npm install --prefix backend && npm install --prefix frontend"
+    "launch": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\"",
+    "clean-all": "npm cache clean --force && npx rimraf node_modules package-lock.json backend/node_modules backend/package-lock.json frontend/node_modules frontend/package-lock.json",
+    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend"
   }
 }
