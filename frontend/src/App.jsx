@@ -93,9 +93,10 @@ function App() {
 
       {shortUrl && (
         <p>
-          Short Url: <a href={shortUrl}>{shortUrl}</a>
+          Short Url: <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
         </p>
       )}
+
     </div>
   );
 }
