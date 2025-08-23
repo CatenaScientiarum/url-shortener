@@ -3,12 +3,6 @@
 
 /frontend/dist
 
-backend/.env
-frontend/.env
-
-.env.local
-.env.*.local
-
 /backend/data/urls.db
 /backend/data/*.db
 /backend/data/*.sqlite

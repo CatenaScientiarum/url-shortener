@@ -1,35 +1,25 @@
-# url-shortener
-Link shortener service 
+# LinkForge
 
-Start guide
-```bash
-1. Backend
+To make setup and development easier, the project includes several npm scripts.  
+These scripts help future developers and users install, launch, and fix the application quickly. 
 
-cd backend
+## Start guide
 
-npm install
+Starts both backend and frontend concurrently:
+- Backend runs with `npm run dev` in `/backend`
+- Frontend runs with `npm run dev` in `/frontend` on port `5555`
 
-node index.js
+---
 
-2. frontend
+## Recommended Order for Setup
 
-cd frontend
+1. Run `npm run install-all`  
+2. If an error occurs, run:  
+   - `npm run clean-all`  
+   - `npm run fix`  
+   - then retry `npm run install-all`  
+3. Finally, start the project with:  
+   - `npm run launch`
+   
 
-npm install
-
-npm run dev
-
-SQLite does not create missing directories. If ./data/ does not exist, create it.
-
-cd backend
-mkdir -p data
-
-Essential
-
-# backend/.env (LOCAL )
-PORT=5000 (PORT — port for Express (e.g. 5000))
-DATABASE_URL=./data/urls.db
-
-# hCaptcha secret ( HCAPTCHA_SECRET — hCaptcha private secret (hCaptcha Dashboard https://dashboard.hcaptcha.com/))
-HCAPTCHA_SECRET=ES_your_hcaptcha_secret_here
 
