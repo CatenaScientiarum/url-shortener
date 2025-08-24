@@ -1,4 +1,4 @@
-import { useState,useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 // import HCaptcha from "@hcaptcha/react-hcaptcha";
 import "./App.css";
 
@@ -10,7 +10,7 @@ function App() {
   const captchaRef = useRef();
 
   // rewrite - cause of CORS issues
-  // useEffect(() => { 
+  // useEffect(() => {
   //   fetch(`${import.meta.env.VITE_API_URL}/api/usage`, {
   //     credentials: "include"
   //   })
@@ -22,65 +22,76 @@ function App() {
   // }, []);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // const needsCaptcha = (count % 5 === 3);
-  // if (needsCaptcha && !captchaToken) {
-  //   alert("Do captcha before URL");
-  //   return;
-  // }
+    // const needsCaptcha = (count % 5 === 3);
+    // if (needsCaptcha && !captchaToken) {
+    //   alert("Do captcha before URL");
+    //   return;
+    // }
 
-  try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/shorten`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ url })
-    });
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/shorten`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ url }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      console.error("Server error:", data);
-      if (data.captchaRequired) {
-        alert("Service needs captcha to prove you re not a bot,please do it.");
-      } else {
-        alert(data.error || "Server error");
+      if (!res.ok) {
+        console.error("Server error:", data);
+        if (data.captchaRequired) {
+          alert(
+            "Service needs captcha to prove you re not a bot,please do it."
+          );
+        } else {
+          alert(data.error || "Server error");
+        }
+        return;
       }
-      return;
-    }
 
-    setShortUrl(data.shortUrl || "");
-    if (typeof data.count === "number") setCount(data.count);
-    else setCount(prev => prev + 1);
+      setShortUrl(data.shortUrl || "");
+      if (typeof data.count === "number") setCount(data.count);
+      else setCount((prev) => prev + 1);
 
-    if (captchaRef.current) {
-      captchaRef.current.resetCaptcha();
-      setCaptchaToken(null);
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha();
+        setCaptchaToken(null);
+      }
+      setUrl("");
+    } catch (err) {
+      console.error("Request error:", err);
+      alert("Request error");
     }
-    setUrl("");
-  } catch (err) {
-    console.error("Request error:", err);
-    alert("Request error");
-  }
-};
+  };
+
 
   return (
     <div>
-      <h1>URL shortening service</h1>
-      
-      {/* <p>Links created in session: {count}</p> */  /*cause of CORS issues*/} 
+      <h1 className="title">
+        <a href="/" className="title-link">
+          Link Forge
+        </a>
+      </h1>
+      <h1 className="description">
+        Transform long URLs into clean, shareable links
+      </h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="url"
-          value={url}
-          placeholder="Enter URL..."
-          onChange={(e) => setUrl(e.target.value)}
-          required
-        />
+      {/* <p>Links created in session: {count}</p> */
+      /*cause of CORS issues*/}
+      <div className="transparent-box">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="url"
+            value={url}
+            placeholder="Please enter your URL here"
+            onChange={(e) => setUrl(e.target.value)}
+            required
+          />
 
-        {/* {(count % 5 === 3) && ( // cause of CORS issues
+          {/* {(count % 5 === 3) && ( // cause of CORS issues
           <HCaptcha
           sitekey={siteKey}
           onVerify={(token) => setCaptchaToken(token)}
@@ -88,15 +99,19 @@ function App() {
           />
         )} */}
 
-        <button type="submit">Do magic</button>
-      </form>
+          <button type="submit">Do magic</button>
+        </form>
+      </div>
 
+      
       {shortUrl && (
         <p>
-          Short Url: <a href={shortUrl} target="_blank" rel="noopener noreferrer">{shortUrl}</a>
+          Short Url:{" "}
+          <a href={shortUrl} target="_blank" rel="noopener noreferrer">
+            {shortUrl}
+          </a>
         </p>
       )}
-
     </div>
   );
 }
