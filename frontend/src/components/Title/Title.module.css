@@ -1,0 +1,53 @@
+.title {
+  position: relative;
+  display: inline-block;
+  top: -80px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #ff8c00;
+  font-family: "Jersey 20", sans-serif;
+}
+
+
+.title a {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+.title::before {
+  content: "";
+  position: absolute;
+  top: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 230px;
+  background: url('/gerland.png') no-repeat center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.title::after {
+  content: "";
+  position: absolute;
+  top: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 230px;
+  background: url('/gerland.png') no-repeat center;
+  background-size: contain;
+  pointer-events: none;
+
+  animation: blink 3s infinite ease-in-out;
+}
+
+@keyframes blink {
+  0%   { opacity: 1; }
+  25%  { opacity: 0.3; }
+  50%  { opacity: 0.8; }
+  75%  { opacity: 0.4; }
+  100% { opacity: 1; }
+}
