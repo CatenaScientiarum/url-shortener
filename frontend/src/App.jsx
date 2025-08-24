@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 // import HCaptcha from "@hcaptcha/react-hcaptcha";
 import "./App.css";
+import "./normalize.css";
+import Title from "./components/Title/Title";
+import Description from "./components/Description/Description";
+import UrlForm from "./components/UrlForm/UrlForm";
+import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
+
 
 function App() {
   const [url, setUrl] = useState("");
@@ -70,48 +76,10 @@ function App() {
 
   return (
     <div>
-      <h1 className="title">
-        <a href="/" className="title-link">
-          Link Forge
-        </a>
-      </h1>
-      <h1 className="description">
-        Transform long URLs into clean, shareable links
-      </h1>
-
-      {/* <p>Links created in session: {count}</p> */
-      /*cause of CORS issues*/}
-      <div className="transparent-box">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="url"
-            value={url}
-            placeholder="Please enter your URL here"
-            onChange={(e) => setUrl(e.target.value)}
-            required
-          />
-
-          {/* {(count % 5 === 3) && ( // cause of CORS issues
-          <HCaptcha
-          sitekey={siteKey}
-          onVerify={(token) => setCaptchaToken(token)}
-          ref={captchaRef}
-          />
-        )} */}
-
-          <button type="submit">Do magic</button>
-        </form>
-      </div>
-
-      
-      {shortUrl && (
-        <p>
-          Short Url:{" "}
-          <a href={shortUrl} target="_blank" rel="noopener noreferrer">
-            {shortUrl}
-          </a>
-        </p>
-      )}
+      <Title />
+      <Description />
+      <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
+      {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
     </div>
   );
 }
