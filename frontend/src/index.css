@@ -6,25 +6,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --gerland1-w: clamp(120px, 26vw, 420px);
-  --gerland1-h: calc(var(--gerland1-w) * 0.55);
-}
-
-:root{
+  /*title garland*/
   --gerland-w: clamp(120px, 18vw, 350px);
   --gerland-h: calc(var(--gerland-w) * 0.66);
-}
-
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  /*url-form garland*/
+  --gerland1-w: clamp(120px, 26vw, 420px);
+  --gerland1-h: calc(var(--gerland1-w) * 0.55);
 }
