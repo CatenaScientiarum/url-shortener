@@ -11,9 +11,8 @@
 }
 
 :root{
-  /* мін, бажаний, макс розмір лампочки (ширина) */
   --gerland-w: clamp(120px, 18vw, 350px);
-  --gerland-h: calc(var(--gerland-w) * 0.66); /* якщо співвідношення 350×230 -> ~0.66 */
+  --gerland-h: calc(var(--gerland-w) * 0.66);
 }
 
 

@@ -68,10 +68,7 @@
 }
 
 @media (max-width: 569px) {
-  .label,
-  .shortUrl {
-    display: none;
-  }
+
   .container {
     display: flex;
     justify-content: center;

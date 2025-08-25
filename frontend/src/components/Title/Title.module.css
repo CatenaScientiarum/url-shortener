@@ -19,7 +19,6 @@
 .link:hover,
 .link:focus,
 .link:focus-visible {
-  color: #00FF8C;
   text-shadow: 0 0 8px rgba(0,255,140,0.3);
 }
 
@@ -99,14 +98,12 @@ h1 {
 }
 
 @media (min-width: 360px) and (max-width: 479px) {
-  .title {
-    top: -10px;
-  }
+
   .title::before,
   .title::after {
     width: 220px;
     height: 140px;
-    top: -70px;
+    top: -55px;
     background-size: contain;
   }
   h1 { font-size: 1.8rem; }
@@ -114,9 +111,7 @@ h1 {
 
 @media (max-width: 479px) {
   :root { --gerland-w: clamp(80px, 28vw, 220px); }
-  .title { top: -20px; }
-  .title::before,
-  .title::after { top: -40px; }
+
 }
 
 @media (min-width: 480px) and (max-width: 767px) {

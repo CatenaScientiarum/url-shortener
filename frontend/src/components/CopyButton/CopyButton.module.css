@@ -24,8 +24,7 @@
 .copyButton:focus {
   outline: 3px solid rgba(100,108,255,0.28);
   outline-offset: 2px;
-}
-
+}C
 
 .copied {
   background: linear-gradient(90deg, #00FF8C, #00C88A);
