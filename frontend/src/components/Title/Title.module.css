@@ -1,12 +1,13 @@
 .title {
   position: relative;
   display: inline-block;
-  top: -80px;
+  top: -40px;
   left: 0;
   width: 100%;
   text-align: center;
   color: #ff8c00;
   font-family: "Jersey 20", sans-serif;
+  font-size: 36px;
 }
 
 
@@ -22,7 +23,7 @@
   top: -90px;
   left: 50%;
   transform: translateX(-50%);
-  width: 350px;
+  width: 300px;
   height: 230px;
   background: url('/gerland.png') no-repeat center;
   background-size: contain;
@@ -35,7 +36,7 @@
   top: -90px;
   left: 50%;
   transform: translateX(-50%);
-  width: 350px;
+  width: 300px;
   height: 230px;
   background: url('/gerland.png') no-repeat center;
   background-size: contain;

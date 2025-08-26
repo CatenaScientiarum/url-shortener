@@ -1,0 +1,14 @@
+.transparent-box {
+  padding: 60px;
+  width: 421px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background-color: rgba(90, 90, 90, 0.5);
+  backdrop-filter: blur(15px);
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  font-family: "Jersey 20", sans-serif;
+  position: relative;
+  left: 13px;
+}

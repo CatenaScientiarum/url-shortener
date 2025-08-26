@@ -3,5 +3,9 @@
   font-family: "Jersey 20", sans-serif;
   font-size: 200%;
   text-align: center;
+  margin: 0px;
+}
+
+.withPadding {
   padding-bottom: 70px;
 }

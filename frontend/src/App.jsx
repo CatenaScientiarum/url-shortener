@@ -5,6 +5,7 @@ import "./normalize.css";
 import Title from "./components/Title/Title";
 import Description from "./components/Description/Description";
 import UrlForm from "./components/UrlForm/UrlForm";
+import UrlHistory from "./components/UrlHistory/UrlHistory";
 import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
 
 
@@ -73,13 +74,15 @@ function App() {
     }
   };
 
-
+  
   return (
     <div>
       <Title />
-      <Description />
+      <Description description="Transform long URLs into clean, shareable links" withPadding/>
       <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
       {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
+      <Description description= "Link History"/>
+      <UrlHistory url={url} setUrl={setUrl} onSubmit={handleSubmit} />
     </div>
   );
 }
