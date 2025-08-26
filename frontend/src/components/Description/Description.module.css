@@ -1,11 +1,35 @@
 .description {
   color: #ff8c00;
   font-family: "Jersey 20", sans-serif;
-  font-size: 200%;
+  font-size: clamp(1.1rem, 4.2vw, 2.2rem);
   text-align: center;
-  margin: 0px;
+  padding-bottom: 3.5rem;
 }
 
-.withPadding {
-  padding-bottom: 70px;
+@media (max-width: 479px) {
+  .description {
+    padding-bottom: 1.5rem;
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .description {
+    padding-bottom: 2.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .description {
+    font-size: 1.5rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .description {
+    font-size: 2rem;
+    padding-bottom: 4.5rem;
+  }
 }

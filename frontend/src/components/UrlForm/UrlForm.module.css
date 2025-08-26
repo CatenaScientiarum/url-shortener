@@ -43,11 +43,17 @@
   border: none;
   cursor: pointer;
   border-radius: 10px;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .transparent-box button:hover {
   background-color: rgba(255, 128, 0);
+  transform: translateY(-2px);
+}
+
+button {
+  font-weight: 500;
+  font-family: inherit;
 }
 
 .transparent-box input::placeholder {
@@ -58,6 +64,7 @@
   text-align: center;
   letter-spacing: 1px;
   transition: opacity 0.3s;
+
 }
 
 .transparent-box input:focus {
@@ -91,4 +98,101 @@
   50%  { opacity: 0.8; }
   75%  { opacity: 0.4; }
   100% { opacity: 1; }
+}
+
+
+@media (max-width: 359px) {
+  .transparent-box {
+    width: calc(100% - 2rem);
+    padding: 12px;
+    border-radius: 12px;
+    margin: 12px auto;
+    background-size: cover;
+  }
+  .transparent-box form { width: 100%; }
+  .transparent-box input {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+  }
+  .transparent-box button {
+    width: 100%;
+    height: 40px;
+    font-size: 15px;
+    padding: 8px;
+  }
+  .transparent-box::before,
+  .transparent-box::after {
+    width: var(--gerland1-w);
+    height: var(--gerland1-h);
+    left: -280px;
+    top: -105px;
+    width: 220%;
+    background-size: auto 160px;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 479px) {
+  .transparent-box {
+    width: calc(100% - 2rem);
+    padding: 14px;
+  }
+  .transparent-box input { width: 100%; font-size: 15px; }
+}
+
+@media (max-width: 479px) {
+  .transparent-box::before,
+  .transparent-box::after {
+    left: -65px;
+    top: -55px;
+    width: 90px;
+    background-size: contain;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .transparent-box {
+    width: 92%;
+    padding: 16px;
+  }
+  .transparent-box input { width: 100%; font-size: 16px; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .transparent-box {
+    width: 420px;
+    padding: 18px;
+  }
+  .transparent-box input { width: 100%; font-size: 17px; }
+  .transparent-box::before,
+  .transparent-box::after {
+    left: -260px;
+    top: -90px;
+    background-size: auto 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .transparent-box {
+    width: 500px;
+    padding: 20px;
+  }
+  .transparent-box input { width: 100%; font-size: 18px; }
+  .transparent-box button { font-size: 18px; }
+  .transparent-box::before,
+  .transparent-box::after {
+    left: -280px;
+    top: -105px;
+    background-size: auto 230px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .transparent-box::before,
+  .transparent-box::after {
+    left: -80px;
+    top: -70px;
+    width: 180px;
+    background-size: contain;
+  }
 }

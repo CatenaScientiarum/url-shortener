@@ -11,7 +11,8 @@ export default function UrlForm({ url, setUrl, onSubmit }) {
           onChange={(e) => setUrl(e.target.value)}
           required
         />
-        <button type="submit">Do magic</button>
+        <button type="submit" title="Create short link">
+          Do magic</button>
       </form>
     </div>
   );

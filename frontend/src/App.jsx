@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 // import HCaptcha from "@hcaptcha/react-hcaptcha";
+
 import "./App.css";
-import "./normalize.css";
 import Title from "./components/Title/Title";
 import Description from "./components/Description/Description";
 import UrlForm from "./components/UrlForm/UrlForm";
 import UrlHistory from "./components/UrlHistory/UrlHistory";
 import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
+
 
 
 function App() {

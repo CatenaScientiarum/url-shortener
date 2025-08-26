@@ -1,7 +1,86 @@
-.shortUrl {
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.transparent-box button {
+  width: 100%;
+  height: 40px;
+  background-color: rgba(255, 132, 0, 0.5);
   color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.transparent-box button:hover {
+  background-color: rgba(255, 128, 0);
+  transform: translateY(-2px);
+}
+
+.transparent-box input::placeholder {
+  color: #ffffff;
+  opacity: 0.7;
+  font-size: 16px;
+  font-family: "Jersey 20", sans-serif;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: opacity 0.3s;
+
+}
+
+.label {
+  margin-right: 8px;
+  color: #fff;
+  font-family: "Jersey 20", sans-serif;
+  font-size: 18px;
+  display: inline-block;
+}
+
+.shortUrl {
+  font-size: 18px;
+  color: #fff;
+  font-family: "Jersey 20", sans-serif;
+  
+}
+
+.shortUrl:focus {
+  outline-offset: 2px;
 }
 
 .shortUrl a {
-  color: #ffffff;
+  color: #ff8c00;
+  text-decoration: underline;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.shortUrl a:hover {
+  transform: translateY(-2px);
+  color: #ffa733;
+}
+
+@media (max-width: 569px) {
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin-top: 12px;
+  }
+  .container > button,
+  .container button {
+    display: inline-flex;
+    margin: 0;
+    width: 44px;
+    height: 44px;
+  }
 }
