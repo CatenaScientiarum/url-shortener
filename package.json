@@ -14,7 +14,6 @@
     "fix": "npm cache clean --force && npm install -g npm@latest"
   },
   "dependencies": {
-    "inquirer": "^12.9.3",
-    "react-google-recaptcha": "^3.1.0"
+    "inquirer": "^12.9.3"
   }
 }

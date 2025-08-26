@@ -1,59 +1,72 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+// import HCaptcha from "@hcaptcha/react-hcaptcha";
+
 import "./App.css";
 import Title from "./components/Title/Title";
 import Description from "./components/Description/Description";
 import UrlForm from "./components/UrlForm/UrlForm";
 import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
-import CaptchaWindow from "./components/Captcha/CaptchaWindow";
+
+
 
 function App() {
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  // const [captchaToken, setCaptchaToken] = useState(null);
   const [count, setCount] = useState(0);
-  const [captchaVisible, setCaptchaVisible] = useState(false);
-  const pendingUrlRef = useRef(null);
+  const captchaRef = useRef();
 
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "";
-
-  const postUrl = async (payload) => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/shorten`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(payload),
-    });
-
-    let data = {};
-    try {
-      data = await res.json();
-    } catch (err) {
-      console.warn("Failed to parse JSON response:", err);
-    }
-
-    return { res, data };
-  };
+  // rewrite - cause of CORS issues
+  // useEffect(() => {
+  //   fetch(`${import.meta.env.VITE_API_URL}/api/usage`, {
+  //     credentials: "include"
+  //   })
+  //     .then((r) => r.json())
+  //     .then((data) => {
+  //       setCount(data.count || 0);
+  //     })
+  //     .catch((e) => console.error(e));
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // const needsCaptcha = (count % 5 === 3);
+    // if (needsCaptcha && !captchaToken) {
+    //   alert("Do captcha before URL");
+    //   return;
+    // }
+
     try {
-      const { res, data } = await postUrl({ url });
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/shorten`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ url }),
+      });
+
+      const data = await res.json();
 
       if (!res.ok) {
-        if (data && data.captchaRequired) {
-          pendingUrlRef.current = url;
-          setCaptchaVisible(true);
-          return;
+        console.error("Server error:", data);
+        if (data.captchaRequired) {
+          alert(
+            "Service needs captcha to prove you re not a bot,please do it."
+          );
+        } else {
+          alert(data.error || "Server error");
         }
-
-        alert((data && data.error) || "Server error");
         return;
       }
 
       setShortUrl(data.shortUrl || "");
-      setCount(typeof data.count === "number" ? data.count : (prev) => prev + 1);
+      if (typeof data.count === "number") setCount(data.count);
+      else setCount((prev) => prev + 1);
+
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha();
+        setCaptchaToken(null);
+      }
       setUrl("");
     } catch (err) {
       console.error("Request error:", err);
@@ -61,32 +74,6 @@ function App() {
     }
   };
 
-  const onCaptchaVerify = async (token) => {
-    setCaptchaVisible(false);
-
-    const payloadUrl = pendingUrlRef.current || url;
-    pendingUrlRef.current = null;
-
-    try {
-      const { res, data } = await postUrl({ url: payloadUrl, token });
-
-      if (!res.ok) {
-        alert((data && data.error) || "Server error");
-        return;
-      }
-
-      setShortUrl(data.shortUrl || "");
-      setCount(typeof data.count === "number" ? data.count : (prev) => prev + 1);
-      setUrl("");
-    } catch (err) {
-      console.error("Request after captcha error:", err);
-      alert("Request error");
-    }
-  };
-
-  const onCaptchaCancel = () => {
-    setCaptchaVisible(false);
-  };
 
   return (
     <div>
@@ -94,14 +81,6 @@ function App() {
       <Description />
       <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
       {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
-      {siteKey && (
-        <CaptchaWindow
-          siteKey={siteKey}
-          visible={captchaVisible}
-          onVerify={onCaptchaVerify}
-          onCancel={onCaptchaCancel}
-        />
-      )}
     </div>
   );
 }
