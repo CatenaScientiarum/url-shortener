@@ -1,4 +1,4 @@
-.copyButton {
+.removeButton {
   width: 30px;
   height: 30px;
   padding: 0;
@@ -8,35 +8,22 @@
   align-items: center;
   justify-content: center;
   background: 
-    url('/copy_button.png') center/60% no-repeat, 
+    url('/remove_button.png') center/60% no-repeat, 
     rgba(255,140,0,0.5); 
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 }
 
-.copyButton:hover {
+.removeButton:hover {
   transform: translateY(-2px);
   background: 
-    url('/copy_button.png') center/60% no-repeat, 
+    url('/remove_button.png') center/60% no-repeat, 
     rgba(255,140,0,0.8); 
 }
 
-.copyButton:focus {
+.removeButton:focus {
   outline: 3px solid rgba(100,108,255,0.28);
   outline-offset: 2px;
-}
-
-.copied {
-  color: #002;
-  transform: none;
-  box-shadow: 0 6px 14px rgba(0,200,138,0.24);
-}
-
-.copied::after {
-  content: "✓";
-  font-weight: 700;
-  color: #00FF8C;
-  font-size: 1rem;
 }
 
 .visuallyHidden {

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+
 // import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 import "./App.css";
@@ -8,14 +9,18 @@ import UrlForm from "./components/UrlForm/UrlForm";
 import UrlHistory from "./components/UrlHistory/UrlHistory";
 import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
 
-
-
 function App() {
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   // const [captchaToken, setCaptchaToken] = useState(null);
   const [count, setCount] = useState(0);
   const captchaRef = useRef();
+
+  // State for URL history
+  const [history, setHistory] = useState(() => {
+    const saved = localStorage.getItem("urlHistory");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   // rewrite - cause of CORS issues
   // useEffect(() => {
@@ -68,6 +73,15 @@ function App() {
         captchaRef.current.resetCaptcha();
         setCaptchaToken(null);
       }
+
+      setShortUrl(data.shortUrl || "");
+
+      setHistory((prev) => {
+        const updated = [...prev, { original: url, short: data.shortUrl }];
+        localStorage.setItem("urlHistory", JSON.stringify(updated));
+        return updated;
+      });
+
       setUrl("");
     } catch (err) {
       console.error("Request error:", err);
@@ -75,15 +89,17 @@ function App() {
     }
   };
 
-  
   return (
     <div>
       <Title />
-      <Description description="Transform long URLs into clean, shareable links" withPadding/>
+      <Description
+        description="Transform long URLs into clean, shareable links"
+        withPadding
+      />
       <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
       {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
-      <Description description= "Link History"/>
-      <UrlHistory url={url} setUrl={setUrl} onSubmit={handleSubmit} />
+      <Description description="Link History" />
+      <UrlHistory history={history} setHistory={setHistory} />
     </div>
   );
 }

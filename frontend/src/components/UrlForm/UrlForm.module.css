@@ -176,6 +176,7 @@ button {
   .transparent-box {
     width: 500px;
     padding: 20px;
+    margin-top: 100px;
   }
   .transparent-box input { width: 100%; font-size: 18px; }
   .transparent-box button { font-size: 18px; }

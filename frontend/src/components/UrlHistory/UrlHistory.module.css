@@ -1,6 +1,5 @@
 .transparent-box {
-  padding: 60px;
-  width: 421px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,5 +9,98 @@
   border: 2.5px solid rgba(255, 255, 255, 0.3);
   font-family: "Jersey 20", sans-serif;
   position: relative;
-  left: 13px;
+  left: 5px;
+  width: 89%;
 }
+
+.title {
+  margin: 0 0 12px 0;
+  color: #ff8c00;
+  text-align: center;
+}
+
+.empty {
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.03);
+  padding: 10px;
+  border-radius: 8px;
+  gap: 10px;
+}
+
+.link {
+  flex-grow: 1; /* takes up all available space between buttons */
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Right group of buttons */
+.rightBtns {
+  display: flex;
+  gap: 8px;
+}
+
+/* Left button Info remains unchanged */
+.infoBtn {
+  flex-shrink: 0;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+}
+
+.clearBtn {
+  background: transparent;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: "Jersey 20", sans-serif;
+  margin-left: auto;
+
+}
+
+.clearBtn {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.infoRow
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  font-family: "Jersey 20", sans-serif;
+  gap: 8px;
+  text-align: center;
+}
+
+.infoRow a {
+  color: #ff8c00;
+  flex: 1;
+}
+
