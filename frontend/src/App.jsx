@@ -129,19 +129,16 @@ function App() {
 
       <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
 
-      {/* Result area спереду */}
       <div className={`result-area ${shortUrl ? "visible" : ""}`}>
         {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} onOpenHistory={() => setShowHistory(true)} />}
       </div>
 
-      {/* Modal для історії URL */}
       {showHistory && (
         <Modal onClose={() => setShowHistory(false)} ariaLabel="Link history">
           <UrlHistory history={history} setHistory={setHistory} />
         </Modal>
       )}
 
-      {/* reCAPTCHA */}
       {siteKey && (
         <CaptchaWindow
           siteKey={siteKey}
