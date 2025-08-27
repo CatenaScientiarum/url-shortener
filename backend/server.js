@@ -7,6 +7,7 @@ import session from "express-session"; // Session middleware for managing user s
 import http from "http"; // Node.js HTTP module, used to create the server for both Express and Socket.io
 import postgres from "postgres"; // PostgreSQL client for connecting and querying your Supabase/Postgres database
 import * as socketio from "socket.io"; // Real-time communication library, enables WebSocket features (chat, notifications, etc.)
+import fetch from "node-fetch"; //Used for HTTP requests to the API
 
 dotenv.config(); //  load environment variables from the .env file
 
@@ -60,60 +61,146 @@ const sql = postgres(process.env.DATABASE_URL, {
     console.error("PostgreSQL connection error:", err);
   }
 })();
+// Helper: verify recaptcha token with Google
+async function verifyRecaptcha(token, remoteip) {
+  const secret = process.env.RECAPTCHA_SECRET || "";
+  if (!secret) {
+    throw new Error("RECAPTCHA_SECRET not configured in environment");
+  }
 
+  const params = new URLSearchParams({ secret, response: token });
+  if (remoteip) params.append("remoteip", remoteip);
 
-// Shorten URL endpoint
-app.post("/api/shorten", (req, res) => {
-  console.log("POST /shorten body:", req.body);
+  try {
+    const resp = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+    const json = await resp.json();
+    return json;
+  } catch (err) {
+    console.error("Network/parse error during reCAPTCHA verify:", err);
+    return null;
+  }
+}
+
+/**
+ * Manual verification endpoint (useful for debugging)
+ * POST { token: "..." } -> returns verification JSON and logs it
+ */
+app.post("/api/verify", async (req, res) => {
+  const token = req.body && (req.body.token || req.body["g-recaptcha-response"]);
+  if (!token) return res.status(400).json({ error: "token required" });
+
+  try {
+    const verification = await verifyRecaptcha(token, req.ip);
+    console.log("Manual /api/verify -> verification:", verification);
+    if (!verification) return res.status(500).json({ error: "verify failed (network/parse)" });
+    return res.json({ verification });
+  } catch (err) {
+    console.error("Error in /api/verify:", err);
+    return res.status(500).json({ error: "internal error" });
+  }
+});
+
+//Shorten URL endpoint with reCAPTCHA check
+app.post("/api/shorten", async (req, res) => {
+  console.log("POST /api/shorten body:", req.body);
   const url = req.body && req.body.url;
-  // const token = req.body && req.body.token; // Only needed if captcha is enabled
+  const token = req.body && req.body.token;
 
   if (!url) {
     console.log("No url in body");
-    return res.status(400).json({ error: "url потрібен" });
+    return res.status(400).json({ error: "URL is required" });
   }
 
+  // init session counters/timestamps
   if (typeof req.session.count !== "number") req.session.count = 0;
-  // ---- CAPTCHA DISABLED ----
-  // The following block enables hCaptcha. To enable, uncomment and adjust as needed.
-  /*
-  const count = req.session.count;
-  const needsCaptcha = count % 5 === 3;
-  if (needsCaptcha) {
-    if (!token) {
-      console.log("Captcha required but no token");
-      return res
-        .status(400)
-        .json({ error: "captcha required", captchaRequired: true });
-    }
+  if (!Array.isArray(req.session.attemptTimestamps)) req.session.attemptTimestamps = [];
 
-    fetch("https://hcaptcha.com/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        secret: process.env.HCAPTCHA_SECRET || "",
-        response: token,
-      }),
-    })
-      .then((r) => r.json())
-      .then((vd) => {
-        console.log("hCaptcha response:", vd);
-        if (!vd.success) {
-          return res.status(400).json({ error: "captcha failed", details: vd });
+  // sliding window timestamps (keep last 60s)
+  const now = Date.now();
+  req.session.attemptTimestamps.push(now);
+  req.session.attemptTimestamps = req.session.attemptTimestamps.filter(t => now - t < 60_000);
+  const attemptsLastMinute = req.session.attemptTimestamps.length;
+
+  // heuristics
+  const userAgent = (req.headers['user-agent'] || "").toLowerCase();
+  const suspiciousUA = /curl|wget|bot|spider|crawler|python|java|libwww|scrapy|okhttp/i.test(userAgent);
+  const noCookies = !req.headers.cookie;
+  const ip = req.ip || req.connection?.remoteAddress || "";
+
+  // config via env
+  const FORCE_CAPTCHA = process.env.FORCE_CAPTCHA === "1";
+  const randomSamplePercent = parseFloat(process.env.CAPTCHA_SAMPLE || "0.08"); //  8%
+  const randomSample = Math.random() < randomSamplePercent;
+  const rateTrigger = attemptsLastMinute >= (parseInt(process.env.CAPTCHA_RATE_THRESHOLD || "8", 10)); // default 8/min
+
+  // combine rules (logical OR)
+  let needsCaptcha = FORCE_CAPTCHA || rateTrigger || suspiciousUA || noCookies || randomSample;
+
+  // If client provided token — verify it immediately and possibly clear needsCaptcha
+  if (token) {
+    try {
+      const verification = await verifyRecaptcha(token, req.ip);
+      console.log("reCAPTCHA verification result:", verification);
+
+      if (!verification) {
+        console.log("Verification returned null (network/parse error).");
+        return res.status(500).json({ error: "Captcha verification error" });
+      }
+
+      if (!verification.success) {
+        console.log("Captcha verification failed:", verification["error-codes"] || verification);
+        // verification failed -> still challenge
+        return res.status(400).json({ error: "Captcha verification failed", details: verification, captchaRequired: true });
+      }
+
+      // if v3 score present — use it to avoid challenge
+      if (typeof verification.score === "number") {
+        const threshold = parseFloat(process.env.RECAPTCHA_V3_THRESHOLD || "0.55");
+        console.log(`reCAPTCHA v3 score: ${verification.score} (threshold ${threshold})`);
+        if (verification.score >= threshold) {
+          needsCaptcha = false; // passed v3 => do not require interactive challenge
+        } else {
+          // score low => require interactive
+          return res.status(400).json({ error: "Low recaptcha score", captchaRequired: true, details: { score: verification.score }});
         }
-        insertUrlAndRespond(url, req, res);
-      })
-      .catch((err) => {
-        console.error("Error contacting hCaptcha:", err);
-        res.status(500).json({ error: "captcha verification error" });
-      });
-    return; // Prevent double response
+      } else {
+        // v2 success -> ok
+        needsCaptcha = false;
+      }
+    } catch (err) {
+      console.error("Error verifying reCAPTCHA:", err);
+      return res.status(500).json({ error: "Captcha verification error" });
+    }
+  }
+
+  /* If still needs captcha and no token -> ask client to show interactive captcha
+  if (needsCaptcha && !token) {
+    console.log("Captcha required (reason):", {
+      attemptsLastMinute,
+      rateTrigger,
+      suspiciousUA,
+      noCookies,
+      randomSample
+    });
+    return res.status(400).json({
+      error: "Captcha required",
+      captchaRequired: true,
+      reason: { attemptsLastMinute, rateTrigger, suspiciousUA, noCookies, randomSample, ip }
+    });
   }
   */
-  // ---- END CAPTCHA BLOCK ----
 
-  // Directly insert without captcha
-  insertUrlAndRespond(url, req, res);
+  // Passed checks -> insert URL and respond
+  try {
+    await insertUrlAndRespond(url, req, res);
+  } catch (err) {
+    console.error("Insert workflow error:", err);
+    return res.status(500).json({ error: "Internal error" });
+  }
 });
 
 // insert url
@@ -127,7 +214,6 @@ async function insertUrlAndRespond(url, req, res) {
     `;
     req.session.count = (req.session.count || 0) + 1;
     console.log("New session count:", req.session.count);
-
     const shortUrl = req.protocol + "://" + req.get("host") + "/" + shortId;
     res.json({ shortUrl, count: req.session.count });
   } catch (err) {
