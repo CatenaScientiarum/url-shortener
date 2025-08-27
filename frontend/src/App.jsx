@@ -93,7 +93,9 @@ function App() {
       <Title />
       <Description />
       <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
-      {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
+      <div className={`result-area ${shortUrl ? "visible" : ""}`}>
+        {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
+      </div>
       {siteKey && (
         <CaptchaWindow
           siteKey={siteKey}
