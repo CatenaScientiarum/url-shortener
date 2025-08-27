@@ -3,7 +3,7 @@ import styles from "./RemoveButton.module.css";
 export default function RemoveButton({ index, history, setHistory, onClose }) {
   const handleRemove = () => {
     setHistory(prev => prev.filter((_, i) => i !== index));
-    if (onClose) onClose(); // закрываем модальное окно, если передано
+    if (onClose) onClose();
   };
 
   return (

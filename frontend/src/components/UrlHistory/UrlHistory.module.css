@@ -9,19 +9,6 @@
   border: 2.5px solid rgba(255, 255, 255, 0.3);
   font-family: "Jersey 20", sans-serif;
   position: relative;
-  left: 5px;
-  width: 89%;
-}
-
-.title {
-  margin: 0 0 12px 0;
-  color: #ff8c00;
-  text-align: center;
-}
-
-.empty {
-  color: rgba(255,255,255,0.7);
-  text-align: center;
 }
 
 .list {
@@ -33,44 +20,45 @@
   gap: 10px;
   width: 100%;
   justify-content: space-between;
+  max-height: 15.5em;
+  align-items: center;
+  overflow-y: auto;
 }
 
 .item {
   display: flex;
+  width: 94%;
   align-items: center;
   background: rgba(255,255,255,0.03);
   padding: 10px;
   border-radius: 8px;
-  gap: 10px;
+  gap: 5px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
 }
 
 .link {
-  flex-grow: 1; /* takes up all available space between buttons */
+  flex-grow: 1;
   text-align: center;
-  color: #fff;
-  text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #ff8c00;
+  text-decoration: underline;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* Right group of buttons */
-.rightBtns {
+.link:hover {
+  transform: translateY(-2px);
+  color: #ffa733;
+}
+
+.RightButtons {
   display: flex;
   gap: 8px;
 }
 
-/* Left button Info remains unchanged */
-.infoBtn {
-  flex-shrink: 0;
-}
-
-.meta {
-  display: flex;
-  gap: 8px;
-}
-
-.clearBtn {
+.ClearButton {
   background: transparent;
   color: #fff;
   padding: 6px 8px;
@@ -79,28 +67,15 @@
   font-size: 20px;
   font-family: "Jersey 20", sans-serif;
   margin-left: auto;
-
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 }
 
-.clearBtn {
+.ClearButton {
   margin-top: 12px;
   width: 100%;
 }
 
-.infoRow
-{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  margin-top: 15px;
-  font-family: "Jersey 20", sans-serif;
-  gap: 8px;
-  text-align: center;
+.ClearButton:hover {
+  background-color: rgba(255, 128, 0);
+  transform: translateY(-2px);
 }
-
-.infoRow a {
-  color: #ff8c00;
-  flex: 1;
-}
-

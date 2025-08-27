@@ -68,6 +68,12 @@
   color: #ffa733;
 }
 
+.actionRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 @media (max-width: 569px) {
 
   .container {

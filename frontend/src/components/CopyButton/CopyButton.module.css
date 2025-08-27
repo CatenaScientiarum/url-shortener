@@ -4,21 +4,21 @@
   padding: 0;
   border: none;
   border-radius: 10px;
+  background: rgba(255,140,0,0.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: 
-    url('/copy_button.png') center/60% no-repeat, 
-    rgba(255,140,0,0.5); 
+  background-image: url('/copy_button.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 }
 
 .copyButton:hover {
   transform: translateY(-2px);
-  background: 
-    url('/copy_button.png') center/60% no-repeat, 
-    rgba(255,140,0,0.8); 
+  background-color: rgba(0255,140,0.8);
 }
 
 .copyButton:focus {
