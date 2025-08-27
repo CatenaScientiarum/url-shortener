@@ -28,4 +28,18 @@ body {
 .container {
   max-width: 920px;
   margin: 0 auto;
+  padding: 2rem;
+}
+
+.result-area {
+  min-height: 74px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 260ms ease, opacity 180ms ease;
+  opacity: 0;
+}
+
+.result-area.visible {
+  max-height: 200px;
+  opacity: 1;
 }
