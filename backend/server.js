@@ -177,7 +177,7 @@ app.post("/api/shorten", async (req, res) => {
     }
   }
 
-  /* If still needs captcha and no token -> ask client to show interactive captcha
+  // If still needs captcha and no token -> ask client to show interactive captcha
   if (needsCaptcha && !token) {
     console.log("Captcha required (reason):", {
       attemptsLastMinute,
@@ -192,7 +192,7 @@ app.post("/api/shorten", async (req, res) => {
       reason: { attemptsLastMinute, rateTrigger, suspiciousUA, noCookies, randomSample, ip }
     });
   }
-  */
+
 
   // Passed checks -> insert URL and respond
   try {
