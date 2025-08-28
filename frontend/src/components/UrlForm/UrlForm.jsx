@@ -12,7 +12,7 @@ export default function UrlForm({ url, setUrl, onSubmit }) {
           required
         />
         <button type="submit" title="Create short link">
-          Do magic</button>
+          Forge</button>
       </form>
     </div>
   );
