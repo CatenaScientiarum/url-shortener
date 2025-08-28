@@ -6,6 +6,7 @@ import UrlForm from "./components/UrlForm/UrlForm";
 import UrlHistory from "./components/UrlHistory/UrlHistory";
 import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
 import Modal from "./components/Modal/Modal";
+import { QrCodeProvider } from "./components/QrCode/QrCodeContext";
 import CaptchaWindow from "./components/Captcha/CaptchaWindow";
 
 function App() {
@@ -63,7 +64,9 @@ function App() {
 
       // Update short URL and count
       setShortUrl(data.shortUrl || "");
-      setCount(typeof data.count === "number" ? data.count : (prev) => prev + 1);
+      setCount(
+        typeof data.count === "number" ? data.count : (prev) => prev + 1
+      );
 
       // Update history
       setHistory((prev) => {
@@ -98,7 +101,9 @@ function App() {
       }
 
       setShortUrl(data.shortUrl || "");
-      setCount(typeof data.count === "number" ? data.count : (prev) => prev + 1);
+      setCount(
+        typeof data.count === "number" ? data.count : (prev) => prev + 1
+      );
 
       // Update history
       setHistory((prev) => {
@@ -123,31 +128,38 @@ function App() {
   };
 
   return (
-    <div>
-      <Title />
-      <Description description="Transform long URLs into clean, shareable links" withPadding />
+    <QrCodeProvider>
+      <div>
+        <Title />
+        <Description description="Transform long URLs into clean, shareable links" withPadding />
 
-      <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
+        <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
 
-      <div className={`result-area ${shortUrl ? "visible" : ""}`}>
-        {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} onOpenHistory={() => setShowHistory(true)} />}
+        <div className={`result-area ${shortUrl ? "visible" : ""}`}>
+          {shortUrl && (
+            <ShortUrlDisplay
+              shortUrl={shortUrl}
+              onOpenHistory={() => setShowHistory(true)}
+            />
+          )}
+        </div>
+
+        {showHistory && (
+          <Modal onClose={() => setShowHistory(false)} ariaLabel="Link history">
+            <UrlHistory history={history} setHistory={setHistory} />
+          </Modal>
+        )}
+
+        {siteKey && (
+          <CaptchaWindow
+            siteKey={siteKey}
+            visible={captchaVisible}
+            onVerify={onCaptchaVerify}
+            onCancel={onCaptchaCancel}
+          />
+        )}
       </div>
-
-      {showHistory && (
-        <Modal onClose={() => setShowHistory(false)} ariaLabel="Link history">
-          <UrlHistory history={history} setHistory={setHistory} />
-        </Modal>
-      )}
-
-      {siteKey && (
-        <CaptchaWindow
-          siteKey={siteKey}
-          visible={captchaVisible}
-          onVerify={onCaptchaVerify}
-          onCancel={onCaptchaCancel}
-        />
-      )}
-    </div>
+    </QrCodeProvider>
   );
 }
 
