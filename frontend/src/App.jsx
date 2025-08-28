@@ -6,8 +6,7 @@ import Title from "./components/Title/Title";
 import Description from "./components/Description/Description";
 import UrlForm from "./components/UrlForm/UrlForm";
 import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
-
-
+import { QrCodeProvider } from "./components/QrCode/QrCodeContext";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -74,14 +73,15 @@ function App() {
     }
   };
 
-
   return (
-    <div>
-      <Title />
-      <Description />
-      <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
-      {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
-    </div>
+    <QrCodeProvider>
+      <div>
+        <Title />
+        <Description />
+        <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
+        {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
+      </div>
+    </QrCodeProvider>
   );
 }
 
