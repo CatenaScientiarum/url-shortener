@@ -4,6 +4,7 @@ import Title from "./components/Title/Title";
 import Description from "./components/Description/Description";
 import UrlForm from "./components/UrlForm/UrlForm";
 import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
+import { QrCodeProvider } from "./components/QrCode/QrCodeContext";
 import CaptchaWindow from "./components/Captcha/CaptchaWindow";
 
 function App() {
@@ -53,7 +54,9 @@ function App() {
       }
 
       setShortUrl(data.shortUrl || "");
-      setCount(typeof data.count === "number" ? data.count : (prev) => prev + 1);
+      setCount(
+        typeof data.count === "number" ? data.count : (prev) => prev + 1
+      );
       setUrl("");
     } catch (err) {
       console.error("Request error:", err);
@@ -76,7 +79,9 @@ function App() {
       }
 
       setShortUrl(data.shortUrl || "");
-      setCount(typeof data.count === "number" ? data.count : (prev) => prev + 1);
+      setCount(
+        typeof data.count === "number" ? data.count : (prev) => prev + 1
+      );
       setUrl("");
     } catch (err) {
       console.error("Request after captcha error:", err);
@@ -89,20 +94,22 @@ function App() {
   };
 
   return (
-    <div>
-      <Title />
-      <Description />
-      <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
-      {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
-      {siteKey && (
-        <CaptchaWindow
-          siteKey={siteKey}
-          visible={captchaVisible}
-          onVerify={onCaptchaVerify}
-          onCancel={onCaptchaCancel}
-        />
-      )}
-    </div>
+    <QrCodeProvider>
+      <div>
+        <Title />
+        <Description />
+        <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
+        {shortUrl && <ShortUrlDisplay shortUrl={shortUrl} />}
+        {siteKey && (
+          <CaptchaWindow
+            siteKey={siteKey}
+            visible={captchaVisible}
+            onVerify={onCaptchaVerify}
+            onCancel={onCaptchaCancel}
+          />
+        )}
+      </div>
+    </QrCodeProvider>
   );
 }
 
