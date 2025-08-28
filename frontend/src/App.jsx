@@ -118,7 +118,7 @@ function App() {
 
       setUrl("");
     } catch (err) {
-      console.error("Request after captcha error:", err);
+      console.error("Request after captcha error:", err);+
       alert("Request error");
     }
   };
@@ -129,12 +129,13 @@ function App() {
 
   return (
     <QrCodeProvider>
-      <div>
+      <div className="transparent-box">
+        <div className="garland top"></div>
+
         <Title />
         <Description description="Transform long URLs into clean, shareable links" withPadding />
-
+        <div className="garland bottom"></div>
         <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
-
         <div className={`result-area ${shortUrl ? "visible" : ""}`}>
           {shortUrl && (
             <ShortUrlDisplay
@@ -143,6 +144,9 @@ function App() {
             />
           )}
         </div>
+
+        
+
 
         {showHistory && (
           <Modal onClose={() => setShowHistory(false)} ariaLabel="Link history">

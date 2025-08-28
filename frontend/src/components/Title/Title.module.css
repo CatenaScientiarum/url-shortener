@@ -71,7 +71,6 @@ h1 {
   background: url('/gerland.png') no-repeat center;
   background-size: contain;
   pointer-events: none;
-
   animation: blink 3s infinite ease-in-out;
 }
 
@@ -98,7 +97,10 @@ h1 {
 }
 
 @media (min-width: 360px) and (max-width: 479px) {
-
+  .title {
+    top: -40px;
+   
+  }
   .title::before,
   .title::after {
     width: 220px;
@@ -106,23 +108,18 @@ h1 {
     top: -55px;
     background-size: contain;
   }
-  h1 { font-size: 1.8rem; }
-}
-
-@media (max-width: 479px) {
-  :root { --gerland-w: clamp(80px, 28vw, 220px); }
-
+  h1 { font-size: 1.8rem;}
 }
 
 @media (min-width: 480px) and (max-width: 767px) {
   .title {
-    top: -30px;
+    top: -40px;
   }
   .title::before,
   .title::after {
     width: 260px;
     height: 180px;
-    top: -80px;
+    top: -70px;
   }
   h1 { font-size: 2.2rem; }
 }
