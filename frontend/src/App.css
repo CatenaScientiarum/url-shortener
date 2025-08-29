@@ -1,20 +1,18 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
 }
 
 body {
   background-image: url("background.gif");
   background-size: cover;
-  overflow: hidden;
   height: 100%;
   margin: 0;
+  padding: 0;
   display: flex;
   place-items: center;
   background-position: center;
@@ -31,4 +29,17 @@ body {
   max-width: 920px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+.result-area {
+  min-height: 80px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 260ms ease, opacity 180ms ease;
+  opacity: 0;
+}
+
+.result-area.visible {
+  max-height: 200px;
+  opacity: 1;
 }

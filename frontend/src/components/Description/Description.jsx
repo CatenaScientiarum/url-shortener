@@ -1,9 +1,9 @@
 import styles from "./Description.module.css";
 
-export default function Description() {
+export default function Description({ description, withPadding = false }) {
   return (
-    <h1 className={styles.description}>
-      Transform long URLs into clean, shareable links
+    <h1 className={`${styles.description} ${withPadding ? styles.withPadding : ""}`}>
+      {description}
     </h1>
   );
 }

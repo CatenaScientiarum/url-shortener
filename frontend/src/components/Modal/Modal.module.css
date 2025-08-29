@@ -1,0 +1,52 @@
+.overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  overflow-y: auto;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+.infoRow {
+  word-break: break-word;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  font-family: "Jersey 20", sans-serif;
+  gap: 8px;
+  text-align: center;
+}
+
+.fullLink {
+  text-decoration: underline;
+  color: #ff8c00;
+  align-items: center;
+  display: flex;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+
+.fullLink:hover {
+  transform: translateY(-2px);
+}
+
+.buttonRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

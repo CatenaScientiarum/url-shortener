@@ -3,7 +3,7 @@
   font-family: "Jersey 20", sans-serif;
   font-size: clamp(1.1rem, 4.2vw, 2.2rem);
   text-align: center;
-  padding-bottom: 3.5rem;
+  margin-top: -10px;
 }
 
 @media (max-width: 479px) {
@@ -30,6 +30,5 @@
 @media (min-width: 1024px) {
   .description {
     font-size: 2rem;
-    padding-bottom: 4.5rem;
   }
 }
