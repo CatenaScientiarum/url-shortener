@@ -2,14 +2,20 @@ import React, { useEffect, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import styles from "./CaptchaWindow.module.css";
 
-
-export default function CaptchaWindow({ siteKey, onVerify, onCancel, visible }) {
+export default function CaptchaWindow({
+  siteKey,
+  onVerify,
+  onCancel,
+  visible,
+}) {
   const captchaRef = useRef(null);
   useEffect(() => {
     if (visible) {
       const prev = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = prev; };
+      return () => {
+        document.body.style.overflow = prev;
+      };
     }
   }, [visible]);
 
@@ -17,7 +23,10 @@ export default function CaptchaWindow({ siteKey, onVerify, onCancel, visible }) 
     if (!visible) return;
 
     const t = setTimeout(() => {
-      if (captchaRef.current && typeof captchaRef.current.execute === "function") {
+      if (
+        captchaRef.current &&
+        typeof captchaRef.current.execute === "function"
+      ) {
         captchaRef.current.execute();
       }
     }, 250);
@@ -28,25 +37,37 @@ export default function CaptchaWindow({ siteKey, onVerify, onCancel, visible }) 
 
   return (
     <div className={styles.backdrop} role="dialog" aria-modal="true">
-      <div className={styles.modal}>
-        <h3 className={styles.title}>Prove you're not a robot</h3>
-        <p className={styles.subtitle}>Complete the captcha to continue</p>
+      <div className={styles.modalWrapper}>
+        <div className={styles.modal}>
+          <div className={styles.attention}>
+            <h3 className={styles.title}>Be calm</h3>
+            <p className={styles.subtitle}>Hmm... very suspicious</p>
+            <p className={styles.subtitle}>
+              Next time we might need verify you're not a robot{" "}
+            </p>
+            <div className={styles.shine}></div>
+          </div>
 
-        <div className={styles.captchaWrapper}>
-          <ReCAPTCHA
-            sitekey={siteKey}
-            size="invisible"
-            ref={captchaRef}
-            onChange={(token) => {
-              if (token) onVerify(token);
-            }}
-          />
-        </div>
+          <div className={styles.gifWrapper}>
+              <img src="/eye.gif" alt="watching eye" className={styles.eyeGif} />
+          </div>
 
-        <div className={styles.controls}>
-          <button className={styles.cancel} onClick={onCancel} type="button">
-            Cancel
-          </button>
+          <div className={styles.captchaWrapper}>
+            <ReCAPTCHA
+              sitekey={siteKey}
+              size="invisible"
+              ref={captchaRef}
+              onChange={(token) => {
+                if (token) onVerify(token);
+              }}
+            />
+          </div>
+
+          <div className={styles.controls}>
+            <button className={styles.cancel} onClick={onCancel} type="button">
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>

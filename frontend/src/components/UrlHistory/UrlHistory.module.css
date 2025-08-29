@@ -1,0 +1,81 @@
+.transparent-box {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background-color: rgba(90, 90, 90, 0.5);
+  backdrop-filter: blur(15px);
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  font-family: "Jersey 20", sans-serif;
+  position: relative;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  justify-content: space-between;
+  max-height: 15.5em;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.item {
+  display: flex;
+  width: 94%;
+  align-items: center;
+  background: rgba(255,255,255,0.03);
+  padding: 10px;
+  border-radius: 8px;
+  gap: 5px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+.link {
+  flex-grow: 1;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #ff8c00;
+  text-decoration: underline;
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.link:hover {
+  transform: translateY(-2px);
+  color: #ffa733;
+}
+
+.RightButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.ClearButton {
+  background: transparent;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: "Jersey 20", sans-serif;
+  margin-left: auto;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+
+.ClearButton {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.ClearButton:hover {
+  background-color: rgba(255, 128, 0);
+  transform: translateY(-2px);
+}

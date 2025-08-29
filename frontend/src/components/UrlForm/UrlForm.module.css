@@ -1,6 +1,4 @@
 .transparent-box {
-  padding: 20px;
-  width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,15 +6,8 @@
   background-color: rgba(90, 90, 90, 0.5);
   backdrop-filter: blur(15px);
   border: 2.5px solid rgba(255, 255, 255, 0.3);
-  margin: 20px auto;
   font-family: "Jersey 20", sans-serif;
   position: relative;
-}
-
-.transparent-box form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .transparent-box input {
@@ -54,7 +45,10 @@
 button {
   font-weight: 500;
   font-family: inherit;
+  background: rgba(255,255,255,0.2);
+  font-weight: bold;
 }
+
 
 .transparent-box input::placeholder {
   color: #ffffff;
@@ -64,7 +58,6 @@ button {
   text-align: center;
   letter-spacing: 1px;
   transition: opacity 0.3s;
-
 }
 
 .transparent-box input:focus {
@@ -101,98 +94,75 @@ button {
 }
 
 
-@media (max-width: 359px) {
-  .transparent-box {
-    width: calc(100% - 2rem);
-    padding: 12px;
-    border-radius: 12px;
-    margin: 12px auto;
-    background-size: cover;
-  }
-  .transparent-box form { width: 100%; }
-  .transparent-box input {
-    width: 100%;
-    font-size: 14px;
-    padding: 8px;
-  }
-  .transparent-box button {
-    width: 100%;
-    height: 40px;
-    font-size: 15px;
-    padding: 8px;
-  }
-  .transparent-box::before,
-  .transparent-box::after {
-    width: var(--gerland1-w);
-    height: var(--gerland1-h);
-    left: -280px;
-    top: -105px;
-    width: 220%;
-    background-size: auto 160px;
-  }
-}
-
 @media (min-width: 360px) and (max-width: 479px) {
   .transparent-box {
     width: calc(100% - 2rem);
     padding: 14px;
   }
-  .transparent-box input { width: 100%; font-size: 15px; }
-}
-
-@media (max-width: 479px) {
+  .transparent-box input {
+    width: 100%;
+    font-size: 15px;
+  }
   .transparent-box::before,
   .transparent-box::after {
-    left: -65px;
-    top: -55px;
-    width: 90px;
+    left: -63px;
+    top: -75px;
+    width: 180px;
     background-size: contain;
   }
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
+
+@media (min-width: 480px) {
   .transparent-box {
-    width: 92%;
     padding: 16px;
   }
-  .transparent-box input { width: 100%; font-size: 16px; }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .transparent-box {
-    width: 420px;
-    padding: 18px;
+  .transparent-box input {
+    width: 90%;
+    font-size: 16px;
   }
-  .transparent-box input { width: 100%; font-size: 17px; }
   .transparent-box::before,
   .transparent-box::after {
-    left: -260px;
-    top: -90px;
-    background-size: auto 200px;
+    left: -63px;
+    top: -75px;
+    width: 180px;
+    background-size: contain;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .transparent-box {
+    padding: 18px;
+  }
+  .transparent-box input {
+    width: 90%;
+    font-size: 17px;
+  }
+  .transparent-box::before,
+  .transparent-box::after {
+    width: 55%;
+    left: -70px;
+    top: -88px;
   }
 }
 
 @media (min-width: 1024px) {
   .transparent-box {
-    width: 500px;
+    width: 90%;
     padding: 20px;
+    margin-top: 100px;
   }
-  .transparent-box input { width: 100%; font-size: 18px; }
-  .transparent-box button { font-size: 18px; }
+  .transparent-box input {
+    width: 100%;
+    font-size: 18px;
+  }
+  .transparent-box button {
+    font-size: 18px;
+  }
   .transparent-box::before,
   .transparent-box::after {
-    left: -280px;
-    top: -105px;
-    background-size: auto 230px;
-  }
-}
-
-@media (min-width: 480px) and (max-width: 767px) {
-  .transparent-box::before,
-  .transparent-box::after {
-    left: -80px;
-    top: -70px;
-    width: 180px;
-    background-size: contain;
+    left: -110px;
+    top: -110px;
+    width: 75%;
   }
 }
