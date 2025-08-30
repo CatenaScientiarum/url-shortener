@@ -85,6 +85,14 @@ button {
   animation: blink 3s infinite ease-in-out;
 }
 
+/* A form inner style */
+.formInnerStyle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+}
+
 @keyframes blink {
   0%   { opacity: 1; }
   25%  { opacity: 0.3; }
