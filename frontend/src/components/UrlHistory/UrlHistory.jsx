@@ -3,7 +3,8 @@ import styles from "./UrlHistory.module.css";
 import Modal from "../Modal/Modal";
 import CopyButton from "../CopyButton/CopyButton";
 import InfoButton from "../InfoButton/InfoButton";
-import RemoveButton from "../RemoveButton/RemoveButton";
+import QrCodeButton from "../QrCode/QrCodeButton";
+
 
 export default function UrlHistory({ history = [], setHistory }) {
   const [infoIndex, setInfoIndex] = useState(null);
@@ -36,12 +37,8 @@ export default function UrlHistory({ history = [], setHistory }) {
                     {shortUrl}
                   </a>
                   <div className={styles.RightButtons}>
+                    <QrCodeButton shortUrl={item.short || item.original} />
                     <CopyButton text={shortUrl} />
-                    <RemoveButton
-                      index={i}
-                      history={history}
-                      setHistory={setHistory}
-                    />
                   </div>
                 </li>
               );
@@ -49,7 +46,11 @@ export default function UrlHistory({ history = [], setHistory }) {
           </ul>
 
           <div className={styles.actions}>
-            <button className={styles.ClearButton} title="Clear Url history" onClick={clearAll}>
+            <button
+              className={styles.ClearButton}
+              title="Clear Url history"
+              onClick={clearAll}
+            >
               Clear history
             </button>
           </div>
@@ -63,6 +64,7 @@ export default function UrlHistory({ history = [], setHistory }) {
               setHistory={setHistory}
             />
           )}
+          
         </>
       )}
     </div>
