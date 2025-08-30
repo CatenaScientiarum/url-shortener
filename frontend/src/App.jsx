@@ -8,6 +8,7 @@ import ShortUrlDisplay from "./components/ShortUrlDisplay/ShortUrlDisplay";
 import Modal from "./components/Modal/Modal";
 import { QrCodeProvider } from "./components/QrCode/QrCodeContext";
 import CaptchaWindow from "./components/Captcha/CaptchaWindow";
+import QrCodeWindow from "./components/QrCode/QrCodeWindow";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -19,7 +20,15 @@ function App() {
   // URL history
   const [history, setHistory] = useState(() => {
     const saved = localStorage.getItem("urlHistory");
-    return saved ? JSON.parse(saved) : [];
+    if (!saved) return []; // if there are no saved items, return empty array
+    try {
+      const parsed = saved ? JSON.parse(saved) : [];
+      // fileter out any invalid entries (without 'short' property)
+      return Array.isArray(parsed) ? parsed.filter((item) => item.short) : [];
+    } catch (err) {
+      console.error("Failed to parse history from localStorage:", err);
+      return [];
+    }
   });
 
   const [showHistory, setShowHistory] = useState(false);
@@ -118,7 +127,7 @@ function App() {
 
       setUrl("");
     } catch (err) {
-      console.error("Request after captcha error:", err);+
+      console.error("Request after captcha error:", err);
       alert("Request error");
     }
   };
@@ -133,9 +142,19 @@ function App() {
         <div className="garland top"></div>
 
         <Title />
-        <Description description="Transform long URLs into clean, shareable links" withPadding />
+        <Description
+          description="Transform long URLs into clean, shareable links"
+          withPadding
+        />
         <div className="garland bottom"></div>
-        <UrlForm url={url} setUrl={setUrl} onSubmit={handleSubmit} />
+        <UrlForm
+          url={url}
+          setUrl={setUrl}
+          onSubmit={handleSubmit}
+          history={history}
+          setHistory={setHistory}
+          onOpenHistory={() => setShowHistory(true)}
+        />
         <div className={`result-area ${shortUrl ? "visible" : ""}`}>
           {shortUrl && (
             <ShortUrlDisplay
@@ -144,9 +163,6 @@ function App() {
             />
           )}
         </div>
-
-        
-
 
         {showHistory && (
           <Modal onClose={() => setShowHistory(false)} ariaLabel="Link history">
@@ -162,6 +178,14 @@ function App() {
             onCancel={onCaptchaCancel}
           />
         )}
+        <QrCodeWindow
+        description={
+          <>
+            Scan this QR code to open a site <br />
+            or copy it by clicking on it
+          </>
+        }
+      />
       </div>
     </QrCodeProvider>
   );

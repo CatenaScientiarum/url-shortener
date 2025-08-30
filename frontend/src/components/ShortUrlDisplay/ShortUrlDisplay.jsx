@@ -2,7 +2,6 @@ import styles from "./ShortUrlDisplay.module.css";
 import CopyButton from "../CopyButton/CopyButton";
 import HistoryButton from "../HistoryButton/HistoryButton";
 import QrCodeButton from "../QrCode/QrCodeButton";
-import QrCodeWindow from "../QrCode/QrCodeWindow";
 
 export default function ShortUrlDisplay({ shortUrl, onOpenHistory }) {
   return (
@@ -26,14 +25,7 @@ export default function ShortUrlDisplay({ shortUrl, onOpenHistory }) {
         <HistoryButton onClick={onOpenHistory} />
       </div>
 
-      <QrCodeWindow
-        description={
-          <>
-            Scan this QR code to open a site <br />
-            or copy it by clicking on it
-          </>
-        }
-      />
+      
     </div>
   );
 }

@@ -46,6 +46,8 @@
   text-decoration: underline;
   display: inline-block;
   transition: transform 0.2s ease, color 0.2s ease;
+  border: none;
+  outline: none;
 }
 
 .link:hover {
