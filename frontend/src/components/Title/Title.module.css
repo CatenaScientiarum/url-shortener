@@ -12,7 +12,6 @@
 
 .link {
   transition: color 0.18s ease, text-shadow 0.18s ease;
-  -webkit-tap-highlight-color: transparent;
   outline: none;
 }
 
@@ -132,5 +131,4 @@ h1 {
     height: 230px;
     top: -90px;
   }
-  h1 { font-size: 3.2rem; }
 }
