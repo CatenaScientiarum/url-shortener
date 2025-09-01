@@ -1,7 +1,10 @@
 # LinkForge
 
-To make setup and development easier, the project includes several npm scripts.  
-These scripts help future developers and users install, launch, and fix the application quickly. 
+**Main Information:**
+- [Project description and purpose](https://github.com/CatenaScientiarum/url-shortener/wiki)
+- [Main features of the project](https://github.com/CatenaScientiarum/url-shortener/wiki)
+- [Tech stack](https://github.com/CatenaScientiarum/url-shortener/wiki/Tech-Stack) 
+- [Libraries](https://github.com/CatenaScientiarum/url-shortener/wiki/Libraries)
 
 # Start guide
 
@@ -77,6 +80,3 @@ Here’s the full list of scripts you can use:
 
 - `npm run fix`  
   Updates npm to the latest version (global).  
-   
-
-
